@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trivia Game</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+    #quiz {
+        display: none;
+    }    
+    
+    #scoreContainer {
+        display: none;
+    }
+    
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="start">Start Quiz!</div>
+    <div id="quiz">
+        <div id="question">
+            <p>Question</p>
+        </div>
+        <div id="qImg"></div>
+        <div id="score">
+
+        </div>
+        <div id="timer">
+            <div id="counter">30<div>
+                <div id="bgtimeGauge"></div>
+                <div id="timeGauge"></div>
+        </div>
+        <div id="choices">
+            <div class="choice" id="A" onclick="checkAnswer('A')">A</div>
+            <div class="choice" id="B" onclick="checkAnswer('B')">B</div>
+            <div class="choice" id="C" onclick="checkAnswer('C')">C</div>
+            <div class="choice" id="D" onclick="checkAnswer('D')">D</div>
+
+        </div>
+        <div id="progress">
+            <div class="prog"></div>
+        </div>
+
+    </div>
+
+    <div id="scoreContainer"><img src="" alt="">
+        <p>Good Job!</p>
+    </div>
+</div>
+ 
+<script src="../assets/js/scriptCopy.js"></script>    
+</body>
+</html>
