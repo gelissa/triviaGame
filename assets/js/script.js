@@ -32,35 +32,51 @@ var questions = [
 // make the game
 var game = {
     question: questions,
-    counter: countStartNumber,
+    counter: 5,
     currentQuestion: 0,
     correct: 0, 
     incorrect: 0,
     countdown: function() {
         // decrement counter
-        counter--; 
+        
         // display counter to page using jquery
-        $("#sub-wrapper").text("<p> Time Left: " + this.counter + "</p>")
+
         // need to make timeUp function 
-        timeUp(); 
+        console.log(game.counter)
+        game.counter--; 
+        
+        if (game.counter === 0){
+
+            game.timeUp();
+            game.counter = 5;
+    }    
+    $("#timer").html("<p> Time Left: " + game.counter + "</p>") 
         
     },
     loadQuestion: function() {
         // set timer variable 
-        timer = setInterval(countStartNumber, 3000 * 10);
-        // for loop to go thru questions
-        for (qIndex = 0; qIndex < this.question.length; qIndex++) {
-        // add question dynamically
-        $("#quiz-area").text(this.question.questions)
-        $("#quiz-area").append("<p>" + qIndex + "</p>");
         
+        // for loop to go thru questions
+        // for (qIndex = 0; qIndex < game.question.length; qIndex++) {
+        // add question dynamically
+        $("#quiz-area").text(game.question[game.currentQuestion].question)
+         timer = setInterval(game.countdown, 1000);
+        // $("#quiz-area").append("<p>" + qIndex + "</p>");
+        for (let i = 0; i < game.question[game.currentQuestion].answer.length; i++) {
+            // append answers to quiz area
+            // $(this)
+            
         }
+
+        
+       
     },
     nextQuestion: function() {
         // set countdown
-        this.countdown()
+        // game.countdown()
         // display counter
-        this.counter;
+        // $("#quiz-area").text(this.counter);
+        // this.counter;
         // increment currentQuestion
         this.currentQuestion++;
         // run loadQuestion function 
@@ -72,9 +88,9 @@ var game = {
         // display on page
         $("#quiz-area").text("times up!");
         // if/else for current question or next question
-        if (questions[i] === true || counter === 0) {
+       
             this.nextQuestion();
-        } 
+        
         // do i need an else?
         
     },
@@ -83,6 +99,8 @@ var game = {
         // clearInterval
         clearInterval(timer);
         // display results
+        let results = "You got " + counter + "out of 3 correct.";
+        $("#quiz-area").append(results);
         
     },
     
@@ -90,6 +108,7 @@ var game = {
         // clear timer
         clearInterval(timer);
         // display results
+        $("#quiz-area").append(timer);
 
     }, 
     answerInCorrectly(){
@@ -108,12 +127,19 @@ var game = {
     reset: function(){
         clearInterval(timer);
 
+
     } 
 }
 
 // document onclick (always jquery) for calling the game
-$(document).on("click", game.reset());
+$(document).on("click", "#start", function() {
+    console.log("start");
+    game.countdown();
+    game.loadQuestion();
+    
+
+});
 // document onclick for calling the clicked function
-$(document).on("click", game.clicked())
+$(document).on("click", game.clicked);
 // document onclick for calling the loadQuestion function
-$(document).on("click", game.loadQuestion());
+$(document).on("click", game.loadQuestion);
