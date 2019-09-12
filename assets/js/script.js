@@ -43,6 +43,7 @@ var game = {
 
         // need to make timeUp function 
         console.log(game.counter)
+        game.counter;
         game.counter--; 
         
         if (game.counter === 0){
@@ -64,6 +65,8 @@ var game = {
         // $("#quiz-area").append("<p>" + qIndex + "</p>");
         for (let i = 0; i < game.question[game.currentQuestion].answer.length; i++) {
             // append answers to quiz area
+            $("#answer-area").text(game.question[game.currentQuestion].answer);  
+            $("#start").hide();
             // $(this)
             
         }
@@ -87,19 +90,15 @@ var game = {
         clearInterval(timer);
         // display on page
         $("#quiz-area").text("times up!");
-        // if/else for current question or next question
-       
-            this.nextQuestion();
-        
-        // do i need an else?
-        
+        this.nextQuestion();  
     },
+
     // clicked functions activates other functions
     results: function(){
         // clearInterval
         clearInterval(timer);
         // display results
-        let results = "You got " + counter + "out of 3 correct.";
+        let results = "You got " + game.correct + "out of" + game.question.length + "correct.";
         $("#quiz-area").append(results);
         
     },
@@ -108,26 +107,43 @@ var game = {
         // clear timer
         clearInterval(timer);
         // display results
-        $("#quiz-area").append(timer);
-
+        // $("#quiz-area").append(timer);
+        var selection = $(this).data("id");
+        // if the user's choice (selection) is the same as the correctAnswer
+        if (selection === questions.correctAnswer){
+            // increase the correct counter
+            $("answer-area").text("Wrong!");
+            game.correct++;
+        } else {
+            $("answer-area").text("Wrong!");
+            // increase the incorrect counter
+            game.incorrect++
+        }
+        // load the next question
+        this.nextQuestion(); 
     }, 
-    answerInCorrectly(){
-        if (questions[i] === correctAnswer -1){
-            $("quiz-area").text("wrong!");
-            this.incorrect++;
-            this.nextQuestion();
-        }
-    },
-    answerCorrectly(){
-        if (questions[i] === correctAnswer){
-            $("quiz-area").text("correct!");
-            this.correct++;
-        }
-    },
+    // answerInCorrectly: function(){
+    //     // if the userGuess is incorrect, 
+    //     if (questions[i] === correctAnswer -1){
+    //         $("quiz-area").text("wrong!");
+    //         this.incorrect++;
+    //         this.nextQuestion();
+    //     }
+    // },
+    // answerCorrectly(){
+    //     if (questions[i] === correctAnswer){
+    //         $("quiz-area").text("correct!");
+    //         this.correct++;
+    //     }
+    // },
     reset: function(){
         clearInterval(timer);
-
-
+        // clear/reset all values
+        game.counter = 5;
+        correct = 0;
+        incorrect = 0; 
+        // show the results of the game.
+        game.results();
     } 
 }
 
@@ -140,6 +156,11 @@ $(document).on("click", "#start", function() {
 
 });
 // document onclick for calling the clicked function
-$(document).on("click", game.clicked);
+$(document).on("click", function(){
+    game.clicked();
+});
 // document onclick for calling the loadQuestion function
-$(document).on("click", game.loadQuestion);
+$(document).on("click", function(){
+    game.loadQuestion();
+    
+});
